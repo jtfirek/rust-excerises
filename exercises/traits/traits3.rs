@@ -9,8 +9,10 @@
 
 // I AM NOT DONE
 
-pub trait Licensed {
-    fn licensing_info(&self) -> String;
+pub trait Licensed: ToString {
+    fn licensing_info(&self) -> String {
+        self.to_string()
+    }
 }
 
 struct SomeSoftware {
