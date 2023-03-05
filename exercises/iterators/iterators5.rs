@@ -10,8 +10,6 @@
 //
 // Make the code compile and the tests pass.
 
-// I AM NOT DONE
-
 use std::collections::HashMap;
 
 #[derive(Clone, Copy, PartialEq, Eq)]
@@ -52,9 +50,11 @@ fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progres
 
 fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
     // collection is a slice of hashmaps.
-    // collection = [{ "variables1": Complete, "from_str": None, ... },
-    
-    todo!();
+    collection
+        .iter()
+        .flat_map(|map| map.values())
+        .filter(|&progress| *progress == value)
+        .count()
 }
 
 #[cfg(test)]
