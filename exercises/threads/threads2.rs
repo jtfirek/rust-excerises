@@ -33,5 +33,6 @@ fn main() {
         // interesting in the output? Do you have to 'join' on all the handles?
         // yes it is important as we want all the threads to finish running
         println!("jobs completed {}", status.lock().unwrap().jobs_completed);
+        
     }
 }

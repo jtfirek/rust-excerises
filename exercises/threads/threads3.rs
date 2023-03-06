@@ -3,7 +3,7 @@
 
 // I AM NOT DONE
 
-use std::sync::mpsc;
+use std::sync::mpsc; // "multi-producer, single-consumer" and it provides an API for sending and receiving messages between multiple threads in a Rust program.
 use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
@@ -14,7 +14,7 @@ struct Queue {
     second_half: Vec<u32>,
 }
 
-impl Queue {
+impl Queue { // kinda seems like this impl is being used as a constructor
     fn new() -> Self {
         Queue {
             length: 10,
@@ -25,8 +25,9 @@ impl Queue {
 }
 
 fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
-    let qc = Arc::new(q);
-    let qc1 = Arc::clone(&qc);
+    let qc = Arc::new(q); 
+    // creating references to qc1 and qc2
+    let qc1 = Arc::clone(&qc); 
     let qc2 = Arc::clone(&qc);
 
     thread::spawn(move || {
