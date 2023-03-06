@@ -48,7 +48,7 @@ fn send_tx(q: Queue, tx: mpsc::Sender<u32>) -> () {
 }
 
 fn main() {
-    let (tx, rx) = mpsc::channel();
+    let (tx, rx) = mpsc::channel(); // creates sender and receiver endpoints
     let queue = Queue::new();
     let queue_length = queue.length;
 
