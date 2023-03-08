@@ -7,7 +7,7 @@
 // Execute `rustlings hint from_str` or use the `hint` watch subcommand for a hint.
 
 use std::num::ParseIntError;
-use std::str::FromStr;
+use std::str::FromStr; // like From but specially for &strs
 
 #[derive(Debug, PartialEq)]
 struct Person {
@@ -45,7 +45,20 @@ enum ParsePersonError {
 
 impl FromStr for Person {
     type Err = ParsePersonError;
-    fn from_str(s: &str) -> Result<Person, Self::Err> {
+    fn from_str(s: &str) -> Result<Person, Self::Err> { // the Self key work tells the compiler to use the Err defined in this 
+        if s.len() == 0 {
+            return Err(Self::Err::Empty);
+        }
+        let parts: Vec<&str> = s.split(',').collect();
+        if parts.len() != 2 {
+            return Err(Self::Err::BadLen);
+        }
+        let name = parts[0];
+        let age = parts[1].parse::<usize>().map_err(|e| {
+            // Wrap the error in a custom error type or message
+            Err(Self::Err::ParseInt(e))
+        });
+        return Ok(Person { name: name.to_string(), age: age.unwrap()});
     }
 }
 

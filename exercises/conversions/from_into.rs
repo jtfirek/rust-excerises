@@ -3,7 +3,7 @@
 // You can read more about it at https://doc.rust-lang.org/std/convert/trait.From.html
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a hint.
 
-#[derive(Debug)]
+#[derive(Debug)] // automatically implemenets the enum trait 
 struct Person {
     name: String,
     age: usize,
@@ -11,7 +11,7 @@ struct Person {
 
 // We implement the Default trait to use it as a fallback
 // when the provided string is not convertible into a Person object
-impl Default for Person {
+impl Default for Person { 
     fn default() -> Person {
         Person {
             name: String::from("John"),
@@ -35,10 +35,20 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of Person
 // Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
 
-impl From<&str> for Person {
+
+impl From<&str> for Person { // impl for defining a trait for converting a &str to a Person
     fn from(s: &str) -> Person {
+        let parts: Vec<&str> = s.split(',').collect();
+        let name = parts[0].to_string();
+        if name.is_empty() || parts.len() != 2 {
+            return Person::default();
+        }
+        let age = parts[1].parse::<usize>();
+        match age {
+            Ok(value) => return Person { name: name, age: value},
+            Err(err) => return Person::default(),
+        }
     }
 }
 
