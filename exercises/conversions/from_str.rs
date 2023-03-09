@@ -56,7 +56,7 @@ impl FromStr for Person {
         let name = parts[0];
         let age = parts[1].parse::<usize>().map_err(|e| {
             // Wrap the error in a custom error type or message
-            Err(Self::Err::ParseInt(e))
+            return ParsePersonError::ParseInt(e)
         });
         return Ok(Person { name: name.to_string(), age: age.unwrap()});
     }
